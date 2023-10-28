@@ -13,4 +13,4 @@ namespace API_Parcial3_AlvarezAlvarezEstefania.DAL.Entities
         public virtual DateTime? ModifiedDate { get; set; } 
     }
 }
-}
+
