@@ -13,6 +13,8 @@ namespace API_Parcial3_AlvarezAlvarezEstefania.DAL.Entities
         [Required(ErrorMessage = "¡The field {0} is required!")]
         public string Address { get; set; }
 
+        public int? Phone { get; set; }
+
         [Range(1, 5, ErrorMessage = "Reputation must be in the range of 1 to 5 stars.")]
         public int Stars { get; set; }
 
