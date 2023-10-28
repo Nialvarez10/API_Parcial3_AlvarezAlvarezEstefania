@@ -2,7 +2,7 @@
 
 namespace API_Parcial3_AlvarezAlvarezEstefania.DAL.Entities
 {
-    public class Rooms : AuditBase
+    public class Room : AuditBase
     {
         [Display(Name = "Number")]
         [MaxLength(3, ErrorMessage = "The field {0} must have a maximum of {1} characters")]
@@ -13,6 +13,6 @@ namespace API_Parcial3_AlvarezAlvarezEstefania.DAL.Entities
         [Required(ErrorMessage = "¡The field {0} is required!")]
         public bool Availability { get; set; }
         public Guid? HotelId { get; set; } //Fk
-        public Hotels? Hotel { get; set; }
+        public Hotel? Hotel { get; set; }
     }
 }
