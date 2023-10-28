@@ -1,6 +1,10 @@
-﻿namespace API_Parcial3_AlvarezAlvarezEstefania.Domain.Interfaces
+﻿using API_Parcial3_AlvarezAlvarezEstefania.DAL.Entities;
+
+namespace API_Parcial3_AlvarezAlvarezEstefania.Domain.Interfaces
 {
-    public class IRoomService
+    public interface IRoomService
     {
+        Task<Room> GetRoomByNumberWithAvailabilityAsync(Guid hotelId, string roomNumber);
     }
 }
+
