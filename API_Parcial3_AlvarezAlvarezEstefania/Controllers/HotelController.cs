@@ -33,7 +33,7 @@ namespace API_Parcial3_AlvarezAlvarezEstefania.Controllers
         [Route("GetHotelByIdWithAvailableRooms/{hotelId}")]
         public async Task<ActionResult<Hotel>> GetHotelByIdWithAvailableRoomsAsync(Guid hotelId)
         {
-            if (hotelId == Guid.Empty) return BadRequest("HotelId es requerido!");
+            if (hotelId == Guid.Empty) return BadRequest("HotelId is required!");
 
             var hotel = await _hotelService.GetHotelByIdWithAvailableRoomsAsync(hotelId);
 
@@ -67,7 +67,7 @@ namespace API_Parcial3_AlvarezAlvarezEstefania.Controllers
             catch (Exception ex)
             {
                 if (ex.Message.Contains("duplicate"))
-                    return Conflict("Error al editar la reputación del hotel.");
+                    return Conflict("Error editing hotel reputation.");
 
                 return Conflict(ex.Message);
             }
@@ -76,11 +76,11 @@ namespace API_Parcial3_AlvarezAlvarezEstefania.Controllers
         [Route("DeleteHotel/{hotelId}")]
         public async Task<ActionResult<Hotel>> DeleteHotelAsync(Guid hotelId)
         {
-            if (hotelId == Guid.Empty) return BadRequest("HotelId es requerido!");
+            if (hotelId == Guid.Empty) return BadRequest("HotelId is required!");
 
             var deletedHotel = await _hotelService.DeleteHotelAsync(hotelId);
 
-            if (deletedHotel == null) return NotFound("Hotel no encontrado!");
+            if (deletedHotel == null) return NotFound("Hotel not found!");
 
             return Ok(deletedHotel);
         }
