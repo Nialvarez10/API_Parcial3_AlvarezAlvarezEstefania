@@ -22,5 +22,14 @@ namespace API_Parcial3_AlvarezAlvarezEstefania.Domain.Services
 
             return room;
         }
+
+        public async Task<Hotel> GetHotel(Guid hotelId)
+        {
+            var hotel = await _context.Hotels
+                .Where(h => h.Id == hotelId)
+                .FirstOrDefaultAsync();
+
+            return hotel;
+        }
     }
 }
