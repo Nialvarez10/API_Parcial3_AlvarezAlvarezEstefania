@@ -44,15 +44,21 @@ namespace API_Parcial3_AlvarezAlvarezEstefania.Controllers
 
         [HttpGet]
         [Route("GetHotelsByCityWithAvailableRooms/{city}")]
-        public async Task<IEnumerable<Hotel>> GetHotelsByCityWithAvailableRoomsAsync(string city)
+        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotelsByCityWithAvailableRoomsAsync(string city)
         {
-            if (city==null) return (IEnumerable<Hotel>)BadRequest("city ​​name required!");
+            if (string.IsNullOrWhiteSpace(city))
+            {
+                return BadRequest("City name is required!");
+            }
 
             var hotels = await _hotelService.GetHotelsByCityWithAvailableRoomsAsync(city);
 
-            if (hotels == null || !hotels.Any()) return (IEnumerable<Hotel>)NotFound();
+            if (hotels == null || !hotels.Any())
+            {
+                return NotFound(); 
+            }
 
-            return (IEnumerable<Hotel>)Ok(hotels);
+            return Ok(hotels);
         }
 
         [HttpPut]

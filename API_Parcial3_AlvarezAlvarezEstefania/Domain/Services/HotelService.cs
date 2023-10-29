@@ -37,9 +37,9 @@ namespace API_Parcial3_AlvarezAlvarezEstefania.Domain.Services
         public async Task<IEnumerable<Hotel>> GetHotelsByCityWithAvailableRoomsAsync(string city)
         {
             var hotelsInCityWithAvailableRooms = await _context.Hotels
-                .Include(h => h.Rooms)
-                .Where(h => h.Rooms.Any(r => r.Availability) && h.City == city)
-                .ToListAsync();
+            .Include(h => h.Rooms)
+            .Where(h => h.City == city && h.Rooms.Any(r => r.Availability))
+            .ToListAsync();
 
             return hotelsInCityWithAvailableRooms;
         }
