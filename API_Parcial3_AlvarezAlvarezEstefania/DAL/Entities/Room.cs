@@ -13,6 +13,7 @@ namespace API_Parcial3_AlvarezAlvarezEstefania.DAL.Entities
         [Required(ErrorMessage = "¡The field {0} is required!")]
         public bool Availability { get; set; }
         public Guid? HotelId { get; set; } //Fk
-        public Hotel? Hotel { get; set; }
+
+        public Hotel? hotel { get; set; }
     }
 }
