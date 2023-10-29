@@ -25,7 +25,7 @@ namespace API_Parcial3_AlvarezAlvarezEstefania.Controllers
             if (room == null)
             {
                 // Room is not available, displays an error message.
-                return NotFound($"Room {roomNumber} of the hotel [Hotel.name] already booked");
+                return BadRequest($"Room {roomNumber} of the hotel [Hotel.name] already booked");
             }
 
             // The room is available, return the entire room item.
