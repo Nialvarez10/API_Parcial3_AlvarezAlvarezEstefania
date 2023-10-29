@@ -1,6 +1,94 @@
-﻿namespace API_Parcial3_AlvarezAlvarezEstefania.Controllers
+﻿using API_Parcial3_AlvarezAlvarezEstefania.DAL.Entities;
+using API_Parcial3_AlvarezAlvarezEstefania.Domain.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+namespace API_Parcial3_AlvarezAlvarezEstefania.Controllers
 {
-    public class HotelController
+    [Route("api/[controller]")]
+    [ApiController]
+    public class HotelController : ControllerBase
     {
+        private readonly IHotelService _hotelService;
+       
+
+        public HotelController(IHotelService hotelService)
+        {
+            _hotelService = hotelService;
+            
+        }
+
+        [HttpGet]
+        [Route("GetAllHotelsWithAvailableRooms")]
+        public async Task<ActionResult<IEnumerable<Hotel>>> GetHotelsWithAvailableRoomsAsync()
+        {
+            var hotels = await _hotelService.GetHotelsWithAvailableRoomsAsync();
+
+            if (hotels == null || !hotels.Any()) return NotFound();
+
+            return Ok(hotels);
+        }
+
+        [HttpGet]
+        [Route("GetHotelByIdWithAvailableRooms/{hotelId}")]
+        public async Task<ActionResult<Hotel>> GetHotelByIdWithAvailableRoomsAsync(Guid hotelId)
+        {
+            if (hotelId == Guid.Empty) return BadRequest("HotelId es requerido!");
+
+            var hotel = await _hotelService.GetHotelByIdWithAvailableRoomsAsync(hotelId);
+
+            if (hotel == null) return NotFound(); // 404
+
+            return Ok(hotel); // 200
+        }
+
+        [HttpGet]
+        [Route("GetHotelsByCityWithAvailableRooms/{city}")]
+        public async Task<IEnumerable<Hotel>> GetHotelsByCityWithAvailableRoomsAsync(string city)
+        {
+            if (city==null) return (IEnumerable<Hotel>)BadRequest("city ​​name required!");
+
+            var hotels = await _hotelService.GetHotelsByCityWithAvailableRoomsAsync(city);
+
+            if (hotels == null || !hotels.Any()) return (IEnumerable<Hotel>)NotFound();
+
+            return (IEnumerable<Hotel>)Ok(hotels);
+        }
+
+        [HttpPut]
+        [Route("EditHotelReputation/{hotelId}/{newStars}")]
+        public async Task<IActionResult> EditHotelReputationAsync(Guid hotelId, int newStars)
+        {
+            try
+            {
+                await _hotelService.EditHotelReputationAsync(hotelId, newStars);
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("duplicate"))
+                    return Conflict("Error al editar la reputación del hotel.");
+
+                return Conflict(ex.Message);
+            }
+        }
+        [HttpDelete]
+        [Route("DeleteHotel/{hotelId}")]
+        public async Task<ActionResult<Hotel>> DeleteHotelAsync(Guid hotelId)
+        {
+            if (hotelId == Guid.Empty) return BadRequest("HotelId es requerido!");
+
+            var deletedHotel = await _hotelService.DeleteHotelAsync(hotelId);
+
+            if (deletedHotel == null) return NotFound("Hotel no encontrado!");
+
+            return Ok(deletedHotel);
+        }
+
+
+
     }
+
+
 }
+
